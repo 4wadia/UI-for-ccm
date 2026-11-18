@@ -142,7 +142,6 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                         color: widget.isDarkMode
                             ? Colors.white.withOpacity(0.04)
                             : Colors.white,
-                        border: Border.all(color: palette.border),
                       ),
                       child: Icon(
                         Icons.chevron_left,
