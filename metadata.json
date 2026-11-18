@@ -1,0 +1,6 @@
+{
+  "name": "Finance Management Mobile App UI",
+  "description": "High-fidelity recreation of the Dribbble Finance Management Mobile App concept with dual-mode interactive device emulator, multi-screen showcase canvas, design system tokens, and reference overlay inspector.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
