@@ -109,10 +109,10 @@ export const ManageCardScreen: React.FC<ManageCardScreenProps> = ({
       <div className="relative flex items-center justify-center min-h-[36px]">
         <button
           onClick={onBack}
-          className={`absolute left-0 w-9 h-9 rounded-full flex items-center justify-center border transition-colors cursor-pointer active:scale-95 ${
+          className={`absolute left-0 w-9 h-9 rounded-full flex items-center justify-center shadow-none transition-colors cursor-pointer active:scale-95 ${
             isDarkMode
-              ? 'bg-white/[0.04] hover:bg-white/10 text-[#f8f7f4] border-[rgba(248,247,244,0.12)]'
-              : 'bg-white hover:bg-black/5 text-[#111113] border-[#111113]/15'
+              ? 'bg-white/[0.04] hover:bg-white/10 text-[#f8f7f4]'
+              : 'bg-white hover:bg-black/5 text-[#111113]'
           }`}
           aria-label="Back to cards"
         >
