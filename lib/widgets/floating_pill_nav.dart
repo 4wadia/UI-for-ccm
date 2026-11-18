@@ -26,14 +26,16 @@ class FloatingPillNav extends StatelessWidget {
         ? const Color(0xFFF8F7F4).withOpacity(0.65)
         : const Color(0xFF111113).withOpacity(0.65);
 
-    const double pillWidth = 210;
-    const double padding = 4;
-    const double indicatorWidth = (pillWidth - padding * 2) / 2;
+    final scale = OnyxScale.of(context);
+    final double pillWidth = scale.s(216);
+    final double pillHeight = scale.s(44);
+    final double padding = scale.s(4);
+    final double indicatorWidth = (pillWidth - padding * 2) / 2;
 
     return Container(
       width: pillWidth,
-      height: 40,
-      padding: const EdgeInsets.all(padding),
+      height: pillHeight,
+      padding: EdgeInsets.all(padding),
       decoration: BoxDecoration(
         color: pillBackground,
         borderRadius: BorderRadius.circular(999),
@@ -68,7 +70,7 @@ class FloatingPillNav extends StatelessWidget {
                     child: AnimatedDefaultTextStyle(
                       duration: const Duration(milliseconds: 200),
                       style: OnyxTypography.sans(
-                        fontSize: 12,
+                        fontSize: scale.s(12.5),
                         fontWeight: FontWeight.w600,
                         color: activeTab == ScreenId.home
                             ? activeTextColor
@@ -87,7 +89,7 @@ class FloatingPillNav extends StatelessWidget {
                     child: AnimatedDefaultTextStyle(
                       duration: const Duration(milliseconds: 200),
                       style: OnyxTypography.sans(
-                        fontSize: 12,
+                        fontSize: scale.s(12.5),
                         fontWeight: FontWeight.w600,
                         color: activeTab == ScreenId.cards
                             ? activeTextColor

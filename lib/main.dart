@@ -76,7 +76,7 @@ class _OnyxCardsAppState extends State<OnyxCardsApp> {
             body: SafeArea(
               child: Center(
                 child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 430),
+                  constraints: const BoxConstraints(maxWidth: 412),
                   child: Stack(
                     children: [
                       Positioned.fill(
@@ -124,7 +124,7 @@ class _OnyxCardsAppState extends State<OnyxCardsApp> {
                         Positioned(
                           left: 0,
                           right: 0,
-                          bottom: 14,
+                          bottom: OnyxScale.of(innerContext).s(14),
                           child: Center(
                             child: FloatingPillNav(
                               activeTab: _activeTab,

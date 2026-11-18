@@ -15,6 +15,7 @@ class CardSupplierMark extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scale = OnyxScale.of(context);
     final textColor =
         isLight ? const Color(0xFF111113) : const Color(0xFFF8F7F4);
 
@@ -23,7 +24,7 @@ class CardSupplierMark extends StatelessWidget {
         return Text(
           'RuPay',
           style: OnyxTypography.sans(
-            fontSize: 14,
+            fontSize: scale.s(16),
             fontWeight: FontWeight.w700,
             color: textColor,
             letterSpacing: -0.3,
@@ -33,7 +34,7 @@ class CardSupplierMark extends StatelessWidget {
         return Text(
           'VISA',
           style: OnyxTypography.sans(
-            fontSize: 16,
+            fontSize: scale.s(18),
             fontWeight: FontWeight.w800,
             color: textColor,
             letterSpacing: -0.6,
@@ -41,15 +42,15 @@ class CardSupplierMark extends StatelessWidget {
         );
       case CardSupplier.mastercard:
         return SizedBox(
-          width: 26,
-          height: 16,
+          width: scale.s(30),
+          height: scale.s(18),
           child: Stack(
             children: [
               Positioned(
                 left: 0,
                 child: Container(
-                  width: 16,
-                  height: 16,
+                  width: scale.s(18),
+                  height: scale.s(18),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: const Color(0xFFEB001B).withOpacity(0.92),
@@ -57,10 +58,10 @@ class CardSupplierMark extends StatelessWidget {
                 ),
               ),
               Positioned(
-                left: 10,
+                left: scale.s(11),
                 child: Container(
-                  width: 16,
-                  height: 16,
+                  width: scale.s(18),
+                  height: scale.s(18),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
                     color: const Color(0xFFF79E1B).withOpacity(0.92),
@@ -74,7 +75,7 @@ class CardSupplierMark extends StatelessWidget {
         return Text(
           'AMEX',
           style: OnyxTypography.sans(
-            fontSize: 12,
+            fontSize: scale.s(13.5),
             fontWeight: FontWeight.w700,
             color: textColor,
             letterSpacing: 1.0,
@@ -84,7 +85,7 @@ class CardSupplierMark extends StatelessWidget {
         return Text(
           'DINERS',
           style: OnyxTypography.sans(
-            fontSize: 12,
+            fontSize: scale.s(13.5),
             fontWeight: FontWeight.w700,
             color: textColor,
             letterSpacing: 1.4,
@@ -103,11 +104,12 @@ class PhysicalCreditCard extends StatelessWidget {
     super.key,
     required this.card,
     this.onTap,
-    this.aspectRatio = 1.62,
+    this.aspectRatio = 1.56,
   });
 
   @override
   Widget build(BuildContext context) {
+    final scale = OnyxScale.of(context);
     final originalColor = fetchOriginalCardColor(
       card.bankName,
       card.cardTier,
@@ -131,13 +133,13 @@ class PhysicalCreditCard extends StatelessWidget {
     Widget cardBody = AspectRatio(
       aspectRatio: aspectRatio,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(scale.s(14)),
         child: Container(
           color: bgColor,
           child: Stack(
             children: [
               Padding(
-                padding: const EdgeInsets.all(16),
+                padding: EdgeInsets.all(scale.s(20)),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -151,7 +153,7 @@ class PhysicalCreditCard extends StatelessWidget {
                             Text(
                               'O',
                               style: OnyxTypography.editorial(
-                                fontSize: 18,
+                                fontSize: scale.s(22),
                                 fontWeight: FontWeight.w700,
                                 fontStyle: FontStyle.italic,
                                 color: !card.isFrozen &&
@@ -160,11 +162,11 @@ class PhysicalCreditCard extends StatelessWidget {
                                     : inkColor,
                               ),
                             ),
-                            const SizedBox(width: 6),
+                            SizedBox(width: scale.s(8)),
                             Text(
                               card.bankName.displayName,
                               style: OnyxTypography.sans(
-                                fontSize: 14,
+                                fontSize: scale.s(17),
                                 fontWeight: FontWeight.w600,
                                 color: inkColor,
                                 letterSpacing: -0.2,
@@ -177,8 +179,8 @@ class PhysicalCreditCard extends StatelessWidget {
                             variantLabel.toUpperCase(),
                             overflow: TextOverflow.ellipsis,
                             style: OnyxTypography.mono(
-                              fontSize: 9,
-                              color: inkColor.withOpacity(0.75),
+                              fontSize: scale.s(11),
+                              color: inkColor.withOpacity(0.78),
                               letterSpacing: 1.1,
                             ),
                           ),
@@ -200,17 +202,17 @@ class PhysicalCreditCard extends StatelessWidget {
                                   ? card.holderName
                                   : 'ARJUN SHARMA',
                               style: OnyxTypography.sans(
-                                fontSize: 12,
+                                fontSize: scale.s(14),
                                 fontWeight: FontWeight.w500,
                                 color: inkColor,
                               ),
                             ),
-                            const SizedBox(height: 2),
+                            SizedBox(height: scale.s(3)),
                             Text(
                               '•••• $last4',
                               style: OnyxTypography.mono(
-                                fontSize: 11,
-                                color: inkColor.withOpacity(0.78),
+                                fontSize: scale.s(13),
+                                color: inkColor.withOpacity(0.8),
                                 letterSpacing: 1.6,
                               ),
                             ),

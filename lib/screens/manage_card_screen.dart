@@ -52,6 +52,7 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
   @override
   Widget build(BuildContext context) {
     final palette = OnyxPalette(widget.isDarkMode);
+    final scale = OnyxScale.of(context);
     final card = widget.card;
     final cardSpent = card.balance;
     final availableBalance = max(0.0, card.limit - cardSpent);
@@ -116,17 +117,28 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
       ),
     ];
 
-    final initialCardTransactions = cardRecentTransactions.take(3).toList();
-    final extraCardTransactions = cardRecentTransactions.skip(3).toList();
+    return LayoutBuilder(
+      builder: (context, viewportConstraints) {
+        final isTallViewport = viewportConstraints.maxHeight >= 760;
+        final initialCount = isTallViewport ? 4 : 3;
+        final initialCardTransactions =
+            cardRecentTransactions.take(initialCount).toList();
+        final extraCardTransactions =
+            cardRecentTransactions.skip(initialCount).toList();
 
-    return SingleChildScrollView(
-      padding: const EdgeInsets.fromLTRB(16, 10, 16, 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
+        return SingleChildScrollView(
+          padding: EdgeInsets.fromLTRB(
+            scale.s(22),
+            scale.s(18),
+            scale.s(22),
+            scale.s(22),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
           // Top Navigation Bar
           SizedBox(
-            height: 36,
+            height: scale.s(44),
             child: Stack(
               alignment: Alignment.center,
               children: [
@@ -135,8 +147,8 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                   child: GestureDetector(
                     onTap: widget.onBack,
                     child: Container(
-                      width: 36,
-                      height: 36,
+                      width: scale.s(44),
+                      height: scale.s(44),
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: widget.isDarkMode
@@ -145,7 +157,7 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                       ),
                       child: Icon(
                         Icons.chevron_left,
-                        size: 20,
+                        size: scale.s(24),
                         color: palette.primaryText,
                       ),
                     ),
@@ -154,7 +166,7 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                 Text(
                   'Manage Card',
                   style: OnyxTypography.editorial(
-                    fontSize: 20,
+                    fontSize: scale.s(26),
                     fontWeight: FontWeight.w600,
                     color: palette.primaryText,
                   ),
@@ -162,11 +174,11 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: scale.s(16)),
 
           // Hero Physical Card (Original Color)
           PhysicalCreditCard(card: card),
-          const SizedBox(height: 8),
+          SizedBox(height: scale.s(16)),
 
           // Two-Column Grid: Available & Payment Due
           IntrinsicHeight(
@@ -175,23 +187,23 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
               children: [
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.all(14),
+                    padding: EdgeInsets.all(scale.s(18)),
                     decoration: BoxDecoration(
                       color: palette.cardSurface,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(scale.s(14)),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 24,
+                          height: scale.s(24),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'AVAILABLE',
                                 style: OnyxTypography.mono(
-                                  fontSize: 9,
+                                  fontSize: scale.s(10.5),
                                   color: palette.mutedText,
                                   letterSpacing: 0.9,
                                 ),
@@ -203,30 +215,30 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                                   _balanceVisible
                                       ? Icons.visibility_outlined
                                       : Icons.visibility_off_outlined,
-                                  size: 14,
+                                  size: scale.s(17),
                                   color: palette.mutedText,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: scale.s(8)),
                         Text(
                           _balanceVisible
                               ? formatINR(availableBalance)
                               : '••••••••',
                           style: OnyxTypography.sans(
-                            fontSize: 16,
+                            fontSize: scale.s(20),
                             fontWeight: FontWeight.w700,
                             color: palette.primaryText,
                             tabularFigures: true,
                           ),
                         ),
-                        const SizedBox(height: 4),
+                        SizedBox(height: scale.s(4)),
                         Text(
                           'of ${_balanceVisible ? formatINR(card.limit, compact: true) : '••••'}',
                           style: OnyxTypography.mono(
-                            fontSize: 9,
+                            fontSize: scale.s(10.5),
                             color: palette.mutedText,
                             tabularFigures: true,
                           ),
@@ -235,26 +247,26 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(width: 8),
+                SizedBox(width: scale.s(14)),
                 Expanded(
                   child: Container(
-                    padding: const EdgeInsets.all(14),
+                    padding: EdgeInsets.all(scale.s(18)),
                     decoration: BoxDecoration(
                       color: palette.cardSurface,
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(scale.s(14)),
                     ),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(
-                          height: 24,
+                          height: scale.s(24),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
                                 'PAYMENT DUE',
                                 style: OnyxTypography.mono(
-                                  fontSize: 9,
+                                  fontSize: scale.s(10.5),
                                   color: palette.mutedText,
                                   letterSpacing: 0.9,
                                 ),
@@ -262,7 +274,7 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                               Text(
                                 '1 Oct',
                                 style: OnyxTypography.mono(
-                                  fontSize: 9,
+                                  fontSize: scale.s(10.5),
                                   fontWeight: FontWeight.w600,
                                   color: palette.gold,
                                 ),
@@ -270,11 +282,11 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                             ],
                           ),
                         ),
-                        const SizedBox(height: 8),
+                        SizedBox(height: scale.s(8)),
                         Text(
                           formatINR(cardSpent),
                           style: OnyxTypography.sans(
-                            fontSize: 16,
+                            fontSize: scale.s(20),
                             fontWeight: FontWeight.w700,
                             color: palette.primaryText,
                             tabularFigures: true,
@@ -287,17 +299,17 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
               ],
             ),
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: scale.s(14)),
 
           // Two-Column Grid: Statement & Total Cashback / Rewards
           Row(
             children: [
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: EdgeInsets.all(scale.s(18)),
                   decoration: BoxDecoration(
                     color: palette.cardSurface,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(scale.s(14)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -307,18 +319,18 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                             ? 'STATEMENT CASHBACK'
                             : 'STATEMENT REWARDS',
                         style: OnyxTypography.mono(
-                          fontSize: 9,
+                          fontSize: scale.s(10.5),
                           color: palette.mutedText,
                           letterSpacing: 0.9,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: scale.s(8)),
                       Text(
                         isCashbackCard
                             ? formatINR(statementCashback)
                             : '${formatIndianNumber(statementPoints)} pts',
                         style: OnyxTypography.sans(
-                          fontSize: 16,
+                          fontSize: scale.s(20),
                           fontWeight: FontWeight.w700,
                           color: palette.primaryText,
                           tabularFigures: true,
@@ -328,13 +340,13 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                   ),
                 ),
               ),
-              const SizedBox(width: 8),
+              SizedBox(width: scale.s(14)),
               Expanded(
                 child: Container(
-                  padding: const EdgeInsets.all(12),
+                  padding: EdgeInsets.all(scale.s(18)),
                   decoration: BoxDecoration(
                     color: palette.cardSurface,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(scale.s(14)),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -342,18 +354,18 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                       Text(
                         isCashbackCard ? 'TOTAL CASHBACK' : 'TOTAL REWARDS',
                         style: OnyxTypography.mono(
-                          fontSize: 9,
+                          fontSize: scale.s(10.5),
                           color: palette.mutedText,
                           letterSpacing: 0.9,
                         ),
                       ),
-                      const SizedBox(height: 8),
+                      SizedBox(height: scale.s(8)),
                       Text(
                         isCashbackCard
                             ? formatINR(totalCashback)
                             : '${formatIndianNumber(totalPoints)} pts',
                         style: OnyxTypography.sans(
-                          fontSize: 16,
+                          fontSize: scale.s(20),
                           fontWeight: FontWeight.w700,
                           color: palette.primaryText,
                           tabularFigures: true,
@@ -365,14 +377,14 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
               ),
             ],
           ),
-          const SizedBox(height: 8),
+          SizedBox(height: scale.s(14)),
 
           // Recent Transactions Card
           Container(
-            padding: const EdgeInsets.all(14),
+            padding: EdgeInsets.all(scale.s(18)),
             decoration: BoxDecoration(
               color: palette.cardSurface,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(scale.s(14)),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -383,7 +395,7 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                     Text(
                       'Recent Transactions',
                       style: OnyxTypography.sans(
-                        fontSize: 12,
+                        fontSize: scale.s(15.5),
                         fontWeight: FontWeight.w600,
                         color: palette.primaryText,
                       ),
@@ -395,7 +407,7 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                         child: Text(
                           _showAllTransactions ? 'SHOW LESS' : 'VIEW ALL',
                           style: OnyxTypography.mono(
-                            fontSize: 9,
+                            fontSize: scale.s(11.5),
                             color: palette.mutedText,
                             letterSpacing: 0.9,
                           ),
@@ -403,7 +415,7 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                       ),
                   ],
                 ),
-                const SizedBox(height: 8),
+                SizedBox(height: scale.s(8)),
 
                 ...initialCardTransactions.map(
                   (tx) => _CardTxRow(
@@ -457,6 +469,8 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
         ],
       ),
     );
+      },
+    );
   }
 }
 
@@ -473,16 +487,17 @@ class _CardTxRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final scale = OnyxScale.of(context);
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 6),
+      padding: EdgeInsets.symmetric(vertical: scale.s(10)),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Row(
             children: [
               Container(
-                width: 28,
-                height: 28,
+                width: scale.s(32),
+                height: scale.s(32),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: tx.iconBg,
@@ -491,29 +506,29 @@ class _CardTxRow extends StatelessWidget {
                 child: Text(
                   tx.iconChar,
                   style: OnyxTypography.sans(
-                    fontSize: 11,
+                    fontSize: scale.s(12.5),
                     fontWeight: FontWeight.w700,
                     color: tx.iconFg,
                   ),
                 ),
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: scale.s(12)),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     tx.name,
                     style: OnyxTypography.sans(
-                      fontSize: 12,
+                      fontSize: scale.s(14.5),
                       fontWeight: FontWeight.w500,
                       color: palette.primaryText,
                     ),
                   ),
-                  const SizedBox(height: 1),
+                  SizedBox(height: scale.s(2)),
                   Text(
                     tx.date,
                     style: OnyxTypography.mono(
-                      fontSize: 9,
+                      fontSize: scale.s(11),
                       color: palette.subtleText,
                     ),
                   ),
@@ -527,7 +542,7 @@ class _CardTxRow extends StatelessWidget {
               Text(
                 '-${formatINR(tx.amount)}',
                 style: OnyxTypography.sans(
-                  fontSize: 12,
+                  fontSize: scale.s(14.5),
                   fontWeight: FontWeight.w600,
                   color: palette.primaryText,
                   tabularFigures: true,
@@ -536,7 +551,7 @@ class _CardTxRow extends StatelessWidget {
               Text(
                 tx.status.toUpperCase(),
                 style: OnyxTypography.mono(
-                  fontSize: 8,
+                  fontSize: scale.s(9),
                   color: isDarkMode
                       ? const Color(0xFF34D399)
                       : const Color(0xFF047857),

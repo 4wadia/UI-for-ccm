@@ -2,6 +2,24 @@ import 'dart:ui' show FontFeature;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+class OnyxScale {
+  final double factor;
+  const OnyxScale._(this.factor);
+
+  /// Scales typography, spacing, and controls dynamically up to a 6.9" Galaxy S26 Ultra (412x892 dp).
+  factory OnyxScale.of(BuildContext context, {double? width}) {
+    final size = MediaQuery.sizeOf(context);
+    final w = (width ?? size.width).clamp(320.0, 448.0);
+    final wFactor = w / 390.0;
+    final hFactor = (size.height.clamp(620.0, 960.0)) / 844.0;
+    final factor = (wFactor < hFactor ? wFactor : (wFactor * 0.7 + hFactor * 0.3))
+        .clamp(0.82, 1.12);
+    return OnyxScale._(factor);
+  }
+
+  double s(double base) => base * factor;
+}
+
 class OnyxPalette {
   final bool isDarkMode;
 
