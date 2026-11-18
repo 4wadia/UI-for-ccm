@@ -14,7 +14,7 @@ Future<void> showTransactionDetailSheet({
     context: context,
     isScrollControlled: true,
     backgroundColor: Colors.transparent,
-    barrierColor: Colors.black.withOpacity(0.6),
+    barrierColor: Colors.black.withValues(alpha: 0.6),
     builder: (ctx) => _TransactionDetailSheet(
       transaction: transaction,
       isDarkMode: isDarkMode,
@@ -257,7 +257,7 @@ class _TransactionDetailSheetState extends State<_TransactionDetailSheet> {
                               Icon(
                                 Icons.copy_outlined,
                                 size: 12,
-                                color: palette.primaryText.withOpacity(0.6),
+                                color: palette.primaryText.withValues(alpha: 0.6),
                               ),
                               if (_copied) ...[
                                 const SizedBox(width: 6),

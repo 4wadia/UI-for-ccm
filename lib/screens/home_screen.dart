@@ -208,124 +208,137 @@ class _HomeScreenState extends State<HomeScreen>
                             mainAxisSize: MainAxisSize.min,
                             children: [
                               // Self-Expanding Search Pill
-                              AnimatedContainer(
-                                duration: const Duration(milliseconds: 300),
-                                curve: const Cubic(0.22, 1.0, 0.36, 1.0),
-                                width: _showSearch
-                                    ? constraints.maxWidth
-                                    : controlSize,
-                                height: controlSize,
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: _showSearch ? scale.s(14) : 0,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: _showSearch
-                                      ? palette.cardSurface
-                                      : Colors.transparent,
-                                  borderRadius: BorderRadius.circular(999),
-                                  border: _showSearch
-                                      ? Border.all(color: palette.border)
-                                      : null,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: _showSearch
-                                      ? MainAxisAlignment.start
-                                      : MainAxisAlignment.center,
-                                  children: [
-                                    GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: _showSearch
-                                          ? () => _searchFocusNode.requestFocus()
-                                          : _openSearch,
-                                      child: SizedBox(
-                                        width: _showSearch
-                                            ? scale.s(24)
-                                            : controlSize,
-                                        height: controlSize,
-                                        child: Icon(
+                              Flexible(
+                                fit: FlexFit.loose,
+                                child: AnimatedContainer(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: const Cubic(0.22, 1.0, 0.36, 1.0),
+                                  width: _showSearch
+                                      ? constraints.maxWidth
+                                      : controlSize,
+                                  height: controlSize,
+                                  clipBehavior: Clip.antiAlias,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: _showSearch ? scale.s(14) : 0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: _showSearch
+                                        ? palette.cardSurface
+                                        : Colors.transparent,
+                                    borderRadius: BorderRadius.circular(999),
+                                    border: Border.all(
+                                      color: _showSearch
+                                          ? palette.border
+                                          : Colors.transparent,
+                                    ),
+                                  ),
+                                  child: GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap: _showSearch
+                                        ? () => _searchFocusNode.requestFocus()
+                                        : _openSearch,
+                                    child: Row(
+                                      mainAxisAlignment: _showSearch
+                                          ? MainAxisAlignment.start
+                                          : MainAxisAlignment.center,
+                                      children: [
+                                        Icon(
                                           Icons.search,
                                           size: controlIconSize,
                                           color: _showSearch
                                               ? palette.gold
                                               : palette.primaryText
-                                                  .withOpacity(0.75),
+                                                  .withValues(alpha: 0.75),
                                         ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: ClipRect(
-                                        child: AnimatedOpacity(
-                                          duration:
-                                              const Duration(milliseconds: 240),
-                                          opacity: _showSearch ? 1.0 : 0.0,
-                                          child: _showSearch
-                                              ? Row(
-                                                  children: [
-                                                    SizedBox(width: scale.s(8)),
-                                                    Expanded(
-                                                      child: TextField(
-                                                        controller:
-                                                            _searchController,
-                                                        focusNode:
-                                                            _searchFocusNode,
-                                                        onChanged: (v) =>
-                                                            setState(() =>
-                                                                _searchQuery =
-                                                                    v),
-                                                        style:
-                                                            OnyxTypography.sans(
-                                                          fontSize: scale.s(13),
-                                                          color: palette
-                                                              .primaryText,
-                                                        ),
-                                                        decoration:
-                                                            InputDecoration(
-                                                          isCollapsed: true,
-                                                          border:
-                                                              InputBorder.none,
-                                                          hintText:
-                                                              'Search merchant, bank...',
-                                                          hintStyle:
-                                                              OnyxTypography
-                                                                  .sans(
+                                        if (_showSearch)
+                                          Expanded(
+                                            child: ClipRect(
+                                              child: OverflowBox(
+                                                alignment: Alignment.centerLeft,
+                                                minWidth: 0,
+                                                maxWidth: (constraints.maxWidth -
+                                                        scale.s(56))
+                                                    .clamp(
+                                                        0.0, double.infinity),
+                                                child: SizedBox(
+                                                  width: (constraints.maxWidth -
+                                                          scale.s(56))
+                                                      .clamp(
+                                                          0.0, double.infinity),
+                                                  child: Row(
+                                                    children: [
+                                                      SizedBox(
+                                                          width: scale.s(8)),
+                                                      Expanded(
+                                                        child: TextField(
+                                                          controller:
+                                                              _searchController,
+                                                          focusNode:
+                                                              _searchFocusNode,
+                                                          onChanged: (v) =>
+                                                              setState(() =>
+                                                                  _searchQuery =
+                                                                      v),
+                                                          style: OnyxTypography
+                                                              .sans(
                                                             fontSize:
                                                                 scale.s(13),
                                                             color: palette
-                                                                .primaryText
-                                                                .withOpacity(
-                                                                    0.4),
+                                                                .primaryText,
+                                                          ),
+                                                          decoration:
+                                                              InputDecoration(
+                                                            isCollapsed: true,
+                                                            border:
+                                                                InputBorder.none,
+                                                            hintText:
+                                                                'Search merchant, bank...',
+                                                            hintStyle:
+                                                                OnyxTypography
+                                                                    .sans(
+                                                              fontSize:
+                                                                  scale.s(13),
+                                                              color: palette
+                                                                  .primaryText
+                                                                  .withValues(
+                                                                      alpha:
+                                                                          0.4),
+                                                            ),
                                                           ),
                                                         ),
                                                       ),
-                                                    ),
-                                                    GestureDetector(
-                                                      onTap: _closeSearch,
-                                                      child: Container(
-                                                        width: scale.s(28),
-                                                        height: scale.s(28),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          shape:
-                                                              BoxShape.circle,
-                                                          color:
-                                                              palette.hoverFill,
-                                                        ),
-                                                        child: Icon(
-                                                          Icons.close,
-                                                          size: scale.s(16),
-                                                          color: palette
-                                                              .primaryText
-                                                              .withOpacity(0.7),
+                                                      GestureDetector(
+                                                        onTap: _closeSearch,
+                                                        child: Container(
+                                                          width: scale.s(28),
+                                                          height: scale.s(28),
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            shape:
+                                                                BoxShape.circle,
+                                                            color: palette
+                                                                .hoverFill,
+                                                          ),
+                                                          child: Icon(
+                                                            Icons.close,
+                                                            size: scale.s(16),
+                                                            color: palette
+                                                                .primaryText
+                                                                .withValues(
+                                                                    alpha:
+                                                                        0.7),
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                )
-                                              : const SizedBox.shrink(),
-                                        ),
-                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
                               ),
 
@@ -376,13 +389,15 @@ class _HomeScreenState extends State<HomeScreen>
                                                             shape:
                                                                 BoxShape.circle,
                                                             color: palette.gold
-                                                                .withOpacity(
-                                                                    0.15),
+                                                                .withValues(
+                                                                    alpha:
+                                                                        0.15),
                                                             border: Border.all(
                                                               color: palette
                                                                   .gold
-                                                                  .withOpacity(
-                                                                      0.6),
+                                                                  .withValues(
+                                                                      alpha:
+                                                                          0.6),
                                                             ),
                                                           ),
                                                         ),
@@ -401,6 +416,7 @@ class _HomeScreenState extends State<HomeScreen>
                                                         ? themeExpandedWidth
                                                         : controlSize,
                                                     height: controlSize,
+                                                    clipBehavior: Clip.antiAlias,
                                                     padding:
                                                         EdgeInsets.symmetric(
                                                       horizontal: _themeExpanded
@@ -462,44 +478,53 @@ class _HomeScreenState extends State<HomeScreen>
                                                                 ? palette.gold
                                                                 : palette
                                                                     .primaryText
-                                                                    .withOpacity(
-                                                                        0.75),
+                                                                    .withValues(
+                                                                        alpha:
+                                                                            0.75),
                                                           ),
                                                         ),
-                                                        AnimatedSize(
-                                                          duration:
-                                                              const Duration(
-                                                                  milliseconds:
-                                                                      280),
-                                                          curve: const Cubic(
-                                                              0.22,
-                                                              1.0,
-                                                              0.36,
-                                                              1.0),
-                                                          child: _themeExpanded
-                                                              ? Padding(
-                                                                  padding: EdgeInsets.only(
-                                                                      left: scale
-                                                                          .s(6)),
-                                                                  child: Text(
-                                                                    widget.isDarkMode
-                                                                        ? 'DARK'
-                                                                        : 'LIGHT',
-                                                                    maxLines: 1,
-                                                                    style: OnyxTypography
-                                                                        .mono(
-                                                                      fontSize:
-                                                                          scale.s(
-                                                                              11),
-                                                                      color: palette
-                                                                          .gold,
-                                                                      letterSpacing:
-                                                                          0.8,
+                                                        Flexible(
+                                                          child: AnimatedSize(
+                                                            duration:
+                                                                const Duration(
+                                                                    milliseconds:
+                                                                        280),
+                                                            curve: const Cubic(
+                                                                0.22,
+                                                                1.0,
+                                                                0.36,
+                                                                1.0),
+                                                            child: _themeExpanded
+                                                                ? Padding(
+                                                                    padding: EdgeInsets.only(
+                                                                        left: scale
+                                                                            .s(6)),
+                                                                    child: Text(
+                                                                      widget.isDarkMode
+                                                                          ? 'DARK'
+                                                                          : 'LIGHT',
+                                                                      maxLines:
+                                                                          1,
+                                                                      softWrap:
+                                                                          false,
+                                                                      overflow:
+                                                                          TextOverflow
+                                                                              .clip,
+                                                                      style: OnyxTypography
+                                                                          .mono(
+                                                                        fontSize:
+                                                                            scale.s(
+                                                                                11),
+                                                                        color: palette
+                                                                            .gold,
+                                                                        letterSpacing:
+                                                                            0.8,
+                                                                      ),
                                                                     ),
-                                                                  ),
-                                                                )
-                                                              : const SizedBox
-                                                                  .shrink(),
+                                                                  )
+                                                                : const SizedBox
+                                                                    .shrink(),
+                                                          ),
                                                         ),
                                                       ],
                                                     ),
@@ -529,7 +554,8 @@ class _HomeScreenState extends State<HomeScreen>
                                                   color: _notificationOpen
                                                       ? palette.gold
                                                       : palette.primaryText
-                                                          .withOpacity(0.65),
+                                                          .withValues(
+                                                              alpha: 0.65),
                                                 ),
                                               ),
                                             ),
@@ -577,7 +603,7 @@ class _HomeScreenState extends State<HomeScreen>
                                   ? Icons.visibility_outlined
                                   : Icons.visibility_off_outlined,
                               size: scale.s(18),
-                              color: palette.primaryText.withOpacity(0.55),
+                              color: palette.primaryText.withValues(alpha: 0.55),
                             ),
                           ),
                         ],
@@ -621,16 +647,22 @@ class _HomeScreenState extends State<HomeScreen>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'LIMIT USED',
-                            style: OnyxTypography.mono(
-                              fontSize: scale.s(11),
-                              color: palette.mutedText,
-                              letterSpacing: 1.2,
+                          Flexible(
+                            child: Text(
+                              'LIMIT USED',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: OnyxTypography.mono(
+                                fontSize: scale.s(11),
+                                color: palette.mutedText,
+                                letterSpacing: 1.2,
+                              ),
                             ),
                           ),
+                          SizedBox(width: scale.s(8)),
                           Text(
                             '$utilizationPercent% OF ${_balanceVisible ? formatINR(totalCombinedLimit, compact: true).toUpperCase() : '••••'}',
+                            maxLines: 1,
                             style: OnyxTypography.mono(
                               fontSize: scale.s(11),
                               color: palette.primaryText,
@@ -659,16 +691,21 @@ class _HomeScreenState extends State<HomeScreen>
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            'Recent Activity',
-                            style: OnyxTypography.sans(
-                              fontSize: scale.s(16),
-                              fontWeight: FontWeight.w600,
-                              color: palette.primaryText,
-                              letterSpacing: -0.2,
+                          Expanded(
+                            child: Text(
+                              'Recent Activity',
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: OnyxTypography.sans(
+                                fontSize: scale.s(16),
+                                fontWeight: FontWeight.w600,
+                                color: palette.primaryText,
+                                letterSpacing: -0.2,
+                              ),
                             ),
                           ),
-                          if (extraTransactions.isNotEmpty)
+                          if (extraTransactions.isNotEmpty) ...[
+                            SizedBox(width: scale.s(8)),
                             GestureDetector(
                               onTap: () => setState(() =>
                                   _showAllTransactions = !_showAllTransactions),
@@ -681,6 +718,7 @@ class _HomeScreenState extends State<HomeScreen>
                                 ),
                               ),
                             ),
+                          ],
                         ],
                       ),
                       SizedBox(height: scale.s(12)),

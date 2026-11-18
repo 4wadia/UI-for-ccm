@@ -152,7 +152,7 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
                         color: widget.isDarkMode
-                            ? Colors.white.withOpacity(0.04)
+                            ? Colors.white.withValues(alpha: 0.04)
                             : Colors.white,
                       ),
                       child: Icon(
@@ -174,11 +174,11 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
               ],
             ),
           ),
-          SizedBox(height: scale.s(16)),
+          SizedBox(height: scale.s(12)),
 
           // Hero Physical Card (Original Color)
           PhysicalCreditCard(card: card),
-          SizedBox(height: scale.s(16)),
+          SizedBox(height: scale.s(10)),
 
           // Two-Column Grid: Available & Payment Due
           IntrinsicHeight(
@@ -187,7 +187,10 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
               children: [
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.all(scale.s(18)),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: scale.s(16),
+                      vertical: scale.s(15),
+                    ),
                     decoration: BoxDecoration(
                       color: palette.cardSurface,
                       borderRadius: BorderRadius.circular(scale.s(14)),
@@ -200,14 +203,19 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'AVAILABLE',
-                                style: OnyxTypography.mono(
-                                  fontSize: scale.s(10.5),
-                                  color: palette.mutedText,
-                                  letterSpacing: 0.9,
+                              Expanded(
+                                child: Text(
+                                  'AVAILABLE',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: OnyxTypography.mono(
+                                    fontSize: scale.s(10.5),
+                                    color: palette.mutedText,
+                                    letterSpacing: 0.9,
+                                  ),
                                 ),
                               ),
+                              SizedBox(width: scale.s(6)),
                               GestureDetector(
                                 onTap: () => setState(
                                     () => _balanceVisible = !_balanceVisible),
@@ -247,10 +255,13 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                     ),
                   ),
                 ),
-                SizedBox(width: scale.s(14)),
+                SizedBox(width: scale.s(8)),
                 Expanded(
                   child: Container(
-                    padding: EdgeInsets.all(scale.s(18)),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: scale.s(16),
+                      vertical: scale.s(15),
+                    ),
                     decoration: BoxDecoration(
                       color: palette.cardSurface,
                       borderRadius: BorderRadius.circular(scale.s(14)),
@@ -263,14 +274,19 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text(
-                                'PAYMENT DUE',
-                                style: OnyxTypography.mono(
-                                  fontSize: scale.s(10.5),
-                                  color: palette.mutedText,
-                                  letterSpacing: 0.9,
+                              Expanded(
+                                child: Text(
+                                  'PAYMENT DUE',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: OnyxTypography.mono(
+                                    fontSize: scale.s(10.5),
+                                    color: palette.mutedText,
+                                    letterSpacing: 0.9,
+                                  ),
                                 ),
                               ),
+                              SizedBox(width: scale.s(6)),
                               Text(
                                 '1 Oct',
                                 style: OnyxTypography.mono(
@@ -299,14 +315,17 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
               ],
             ),
           ),
-          SizedBox(height: scale.s(14)),
+          SizedBox(height: scale.s(8)),
 
           // Two-Column Grid: Statement & Total Cashback / Rewards
           Row(
             children: [
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(scale.s(18)),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: scale.s(16),
+                    vertical: scale.s(15),
+                  ),
                   decoration: BoxDecoration(
                     color: palette.cardSurface,
                     borderRadius: BorderRadius.circular(scale.s(14)),
@@ -340,10 +359,13 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                   ),
                 ),
               ),
-              SizedBox(width: scale.s(14)),
+              SizedBox(width: scale.s(8)),
               Expanded(
                 child: Container(
-                  padding: EdgeInsets.all(scale.s(18)),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: scale.s(16),
+                    vertical: scale.s(15),
+                  ),
                   decoration: BoxDecoration(
                     color: palette.cardSurface,
                     borderRadius: BorderRadius.circular(scale.s(14)),
@@ -377,7 +399,7 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
               ),
             ],
           ),
-          SizedBox(height: scale.s(14)),
+          SizedBox(height: scale.s(10)),
 
           // Recent Transactions Card
           Container(
@@ -392,15 +414,20 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      'Recent Transactions',
-                      style: OnyxTypography.sans(
-                        fontSize: scale.s(15.5),
-                        fontWeight: FontWeight.w600,
-                        color: palette.primaryText,
+                    Expanded(
+                      child: Text(
+                        'Recent Transactions',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: OnyxTypography.sans(
+                          fontSize: scale.s(15.5),
+                          fontWeight: FontWeight.w600,
+                          color: palette.primaryText,
+                        ),
                       ),
                     ),
-                    if (extraCardTransactions.isNotEmpty)
+                    if (extraCardTransactions.isNotEmpty) ...[
+                      SizedBox(width: scale.s(8)),
                       GestureDetector(
                         onTap: () => setState(() =>
                             _showAllTransactions = !_showAllTransactions),
@@ -413,6 +440,7 @@ class _ManageCardScreenState extends State<ManageCardScreen> {
                           ),
                         ),
                       ),
+                    ],
                   ],
                 ),
                 SizedBox(height: scale.s(8)),
@@ -493,49 +521,58 @@ class _CardTxRow extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              Container(
-                width: scale.s(32),
-                height: scale.s(32),
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: tx.iconBg,
-                ),
-                alignment: Alignment.center,
-                child: Text(
-                  tx.iconChar,
-                  style: OnyxTypography.sans(
-                    fontSize: scale.s(12.5),
-                    fontWeight: FontWeight.w700,
-                    color: tx.iconFg,
+          Expanded(
+            child: Row(
+              children: [
+                Container(
+                  width: scale.s(32),
+                  height: scale.s(32),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: tx.iconBg,
                   ),
-                ),
-              ),
-              SizedBox(width: scale.s(12)),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    tx.name,
+                  alignment: Alignment.center,
+                  child: Text(
+                    tx.iconChar,
                     style: OnyxTypography.sans(
-                      fontSize: scale.s(14.5),
-                      fontWeight: FontWeight.w500,
-                      color: palette.primaryText,
+                      fontSize: scale.s(12.5),
+                      fontWeight: FontWeight.w700,
+                      color: tx.iconFg,
                     ),
                   ),
-                  SizedBox(height: scale.s(2)),
-                  Text(
-                    tx.date,
-                    style: OnyxTypography.mono(
-                      fontSize: scale.s(11),
-                      color: palette.subtleText,
-                    ),
+                ),
+                SizedBox(width: scale.s(12)),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        tx.name,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: OnyxTypography.sans(
+                          fontSize: scale.s(14.5),
+                          fontWeight: FontWeight.w500,
+                          color: palette.primaryText,
+                        ),
+                      ),
+                      SizedBox(height: scale.s(2)),
+                      Text(
+                        tx.date,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: OnyxTypography.mono(
+                          fontSize: scale.s(11),
+                          color: palette.subtleText,
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
+          SizedBox(width: scale.s(10)),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [

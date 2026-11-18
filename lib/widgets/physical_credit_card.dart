@@ -53,7 +53,7 @@ class CardSupplierMark extends StatelessWidget {
                   height: scale.s(18),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFFEB001B).withOpacity(0.92),
+                    color: const Color(0xFFEB001B).withValues(alpha: 0.92),
                   ),
                 ),
               ),
@@ -64,7 +64,7 @@ class CardSupplierMark extends StatelessWidget {
                   height: scale.s(18),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: const Color(0xFFF79E1B).withOpacity(0.92),
+                    color: const Color(0xFFF79E1B).withValues(alpha: 0.92),
                   ),
                 ),
               ),
@@ -147,40 +147,50 @@ class PhysicalCreditCard extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              'O',
-                              style: OnyxTypography.editorial(
-                                fontSize: scale.s(22),
-                                fontWeight: FontWeight.w700,
-                                fontStyle: FontStyle.italic,
-                                color: !card.isFrozen &&
-                                        originalColor.accentColor != null
-                                    ? originalColor.accentColor
-                                    : inkColor,
-                              ),
-                            ),
-                            SizedBox(width: scale.s(8)),
-                            Text(
-                              card.bankName.displayName,
-                              style: OnyxTypography.sans(
-                                fontSize: scale.s(17),
-                                fontWeight: FontWeight.w600,
-                                color: inkColor,
-                                letterSpacing: -0.2,
-                              ),
-                            ),
-                          ],
-                        ),
                         Flexible(
+                          flex: 3,
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'O',
+                                style: OnyxTypography.editorial(
+                                  fontSize: scale.s(22),
+                                  fontWeight: FontWeight.w700,
+                                  fontStyle: FontStyle.italic,
+                                  color: !card.isFrozen &&
+                                          originalColor.accentColor != null
+                                      ? originalColor.accentColor
+                                      : inkColor,
+                                ),
+                              ),
+                              SizedBox(width: scale.s(8)),
+                              Flexible(
+                                child: Text(
+                                  card.bankName.displayName,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: OnyxTypography.sans(
+                                    fontSize: scale.s(17),
+                                    fontWeight: FontWeight.w600,
+                                    color: inkColor,
+                                    letterSpacing: -0.2,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(width: scale.s(8)),
+                        Flexible(
+                          flex: 2,
                           child: Text(
                             variantLabel.toUpperCase(),
+                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: OnyxTypography.mono(
                               fontSize: scale.s(11),
-                              color: inkColor.withOpacity(0.78),
+                              color: inkColor.withValues(alpha: 0.78),
                               letterSpacing: 1.1,
                             ),
                           ),
@@ -193,31 +203,36 @@ class PhysicalCreditCard extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              card.holderName.isNotEmpty
-                                  ? card.holderName
-                                  : 'ARJUN SHARMA',
-                              style: OnyxTypography.sans(
-                                fontSize: scale.s(14),
-                                fontWeight: FontWeight.w500,
-                                color: inkColor,
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                card.holderName.isNotEmpty
+                                    ? card.holderName
+                                    : 'ARJUN SHARMA',
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: OnyxTypography.sans(
+                                  fontSize: scale.s(14),
+                                  fontWeight: FontWeight.w500,
+                                  color: inkColor,
+                                ),
                               ),
-                            ),
-                            SizedBox(height: scale.s(3)),
-                            Text(
-                              '•••• $last4',
-                              style: OnyxTypography.mono(
-                                fontSize: scale.s(13),
-                                color: inkColor.withOpacity(0.8),
-                                letterSpacing: 1.6,
+                              SizedBox(height: scale.s(3)),
+                              Text(
+                                '•••• $last4',
+                                style: OnyxTypography.mono(
+                                  fontSize: scale.s(13),
+                                  color: inkColor.withValues(alpha: 0.8),
+                                  letterSpacing: 1.6,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
+                        SizedBox(width: scale.s(12)),
                         CardSupplierMark(
                           brand: card.brand,
                           isLight: isLight,
@@ -231,7 +246,7 @@ class PhysicalCreditCard extends StatelessWidget {
               if (card.isFrozen)
                 Positioned.fill(
                   child: Container(
-                    color: Colors.black.withOpacity(0.85),
+                    color: Colors.black.withValues(alpha: 0.85),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

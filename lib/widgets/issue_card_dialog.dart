@@ -12,7 +12,7 @@ Future<void> showIssueCardDialog({
 }) {
   return showDialog<void>(
     context: context,
-    barrierColor: Colors.black.withOpacity(0.6),
+    barrierColor: Colors.black.withValues(alpha: 0.6),
     builder: (ctx) => _IssueCardDialog(
       isDarkMode: isDarkMode,
       onAddCard: onAddCard,
@@ -129,7 +129,7 @@ class _IssueCardDialogState extends State<_IssueCardDialog> {
       limit: numericLimit,
       brand: _resolvedBrand,
       cardTier: '${_selectedBank.shortName} ${_selectedVariant.name}',
-      cardColorValue: original.color.value,
+      cardColorValue: original.color.toARGB32(),
       isLightCard: original.isLight,
       dailyLimit: (numericLimit * 0.25).roundToDouble(),
       internationalEnabled: _resolvedBrand != CardSupplier.rupay,
@@ -151,7 +151,7 @@ class _IssueCardDialogState extends State<_IssueCardDialog> {
       hintText: hint,
       hintStyle: OnyxTypography.sans(
         fontSize: 12,
-        color: palette.primaryText.withOpacity(0.38),
+        color: palette.primaryText.withValues(alpha: 0.38),
       ),
       filled: true,
       fillColor: widget.isDarkMode ? const Color(0xFF000000) : Colors.white,
@@ -251,7 +251,7 @@ class _IssueCardDialogState extends State<_IssueCardDialog> {
                             child: Icon(
                               Icons.close,
                               size: 16,
-                              color: palette.primaryText.withOpacity(0.75),
+                              color: palette.primaryText.withValues(alpha: 0.75),
                             ),
                           ),
                         ),
@@ -323,7 +323,7 @@ class _IssueCardDialogState extends State<_IssueCardDialog> {
                               _selectedVariant.name.toUpperCase(),
                               style: OnyxTypography.mono(
                                 fontSize: 9,
-                                color: previewInk.withOpacity(0.75),
+                                color: previewInk.withValues(alpha: 0.75),
                                 letterSpacing: 1.0,
                               ),
                             ),
@@ -350,7 +350,7 @@ class _IssueCardDialogState extends State<_IssueCardDialog> {
                                   '•••• $previewLast4',
                                   style: OnyxTypography.mono(
                                     fontSize: 10,
-                                    color: previewInk.withOpacity(0.75),
+                                    color: previewInk.withValues(alpha: 0.75),
                                     letterSpacing: 1.4,
                                   ),
                                 ),
@@ -458,7 +458,7 @@ class _IssueCardDialogState extends State<_IssueCardDialog> {
                             ),
                             const SizedBox(height: 6),
                             DropdownButtonFormField<IndianBank>(
-                              value: _selectedBank,
+                              initialValue: _selectedBank,
                               isExpanded: true,
                               dropdownColor: palette.cardSurface,
                               style: OnyxTypography.sans(
@@ -499,7 +499,8 @@ class _IssueCardDialogState extends State<_IssueCardDialog> {
                             ),
                             const SizedBox(height: 6),
                             DropdownButtonFormField<String>(
-                              value: _selectedVariant.name,
+                              key: ValueKey('variant-${_selectedBank.name}'),
+                              initialValue: _selectedVariant.name,
                               isExpanded: true,
                               dropdownColor: palette.cardSurface,
                               style: OnyxTypography.sans(

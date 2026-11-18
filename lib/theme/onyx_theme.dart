@@ -1,4 +1,3 @@
-import 'dart:ui' show FontFeature;
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -34,22 +33,22 @@ class OnyxPalette {
   Color get primaryText =>
       isDarkMode ? const Color(0xFFF8F7F4) : const Color(0xFF111113);
   Color get mutedText => isDarkMode
-      ? const Color(0xFFF8F7F4).withOpacity(0.55)
-      : const Color(0xFF111113).withOpacity(0.58);
+      ? const Color(0xFFF8F7F4).withValues(alpha: 0.55)
+      : const Color(0xFF111113).withValues(alpha: 0.58);
   Color get subtleText => isDarkMode
-      ? const Color(0xFFF8F7F4).withOpacity(0.45)
-      : const Color(0xFF111113).withOpacity(0.50);
+      ? const Color(0xFFF8F7F4).withValues(alpha: 0.45)
+      : const Color(0xFF111113).withValues(alpha: 0.50);
   Color get gold =>
       isDarkMode ? const Color(0xFFD4AF37) : const Color(0xFF9A7B1C);
   Color get border => isDarkMode
-      ? const Color(0xFFF8F7F4).withOpacity(0.14)
-      : const Color(0xFF111113).withOpacity(0.14);
+      ? const Color(0xFFF8F7F4).withValues(alpha: 0.14)
+      : const Color(0xFF111113).withValues(alpha: 0.14);
   Color get divider => isDarkMode
-      ? Colors.white.withOpacity(0.10)
-      : Colors.black.withOpacity(0.10);
+      ? Colors.white.withValues(alpha: 0.10)
+      : Colors.black.withValues(alpha: 0.10);
   Color get hoverFill => isDarkMode
-      ? Colors.white.withOpacity(0.10)
-      : Colors.black.withOpacity(0.05);
+      ? Colors.white.withValues(alpha: 0.10)
+      : Colors.black.withValues(alpha: 0.05);
 }
 
 class OnyxTypography {

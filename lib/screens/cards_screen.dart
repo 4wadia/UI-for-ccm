@@ -38,29 +38,36 @@ class CardsScreen extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      '${cards.length} ACTIVE CARDS',
-                      style: OnyxTypography.mono(
-                        fontSize: scale.s(11),
-                        color: palette.mutedText,
-                        letterSpacing: 1.3,
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${cards.length} ACTIVE CARDS',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: OnyxTypography.mono(
+                          fontSize: scale.s(11),
+                          color: palette.mutedText,
+                          letterSpacing: 1.3,
+                        ),
                       ),
-                    ),
-                    SizedBox(height: scale.s(4)),
-                    Text(
-                      'Your Cards',
-                      style: OnyxTypography.editorial(
-                        fontSize: scale.s(36),
-                        fontWeight: FontWeight.w600,
-                        height: 1.05,
-                        color: palette.primaryText,
+                      SizedBox(height: scale.s(4)),
+                      Text(
+                        'Your Cards',
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: OnyxTypography.editorial(
+                          fontSize: scale.s(36),
+                          fontWeight: FontWeight.w600,
+                          height: 1.05,
+                          color: palette.primaryText,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
+                SizedBox(width: scale.s(12)),
                 GestureDetector(
                   onTap: onOpenNewCardModal,
                   child: Container(

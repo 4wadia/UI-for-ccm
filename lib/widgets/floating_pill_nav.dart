@@ -23,8 +23,8 @@ class FloatingPillNav extends StatelessWidget {
     final activeTextColor =
         isDarkMode ? const Color(0xFF111113) : const Color(0xFFF8F7F4);
     final inactiveTextColor = isDarkMode
-        ? const Color(0xFFF8F7F4).withOpacity(0.65)
-        : const Color(0xFF111113).withOpacity(0.65);
+        ? const Color(0xFFF8F7F4).withValues(alpha: 0.65)
+        : const Color(0xFF111113).withValues(alpha: 0.65);
 
     final scale = OnyxScale.of(context);
     final double pillWidth = scale.s(216);
